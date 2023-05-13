@@ -1,18 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import StockContainer from "./StockContainer";
 import PortfolioContainer from "./PortfolioContainer";
 import SearchBar from "./SearchBar";
 
 function MainContainer() {
+  const [clicked, setClicked] = useState(null);
+  const [stk, setStk] = useState([]);
+
+  function fetchData() {
+    fetch(`http://localhost:3000/stocks`)
+      .then((r) => r.json())
+      .then((data) => setStk(data));
+  }
+  // console.log(clicked);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  function handleStockClick(id) {
+    const clickedStock = stk.find((stock) => stock.id === id);
+    setClicked(clickedStock);
+  }
   return (
     <div>
       <SearchBar />
       <div className="row">
         <div className="col-8">
-          <StockContainer />
+          <StockContainer onAdd={handleStockClick} stk={stk} />
         </div>
         <div className="col-4">
-          <PortfolioContainer />
+          <PortfolioContainer onAdd={handleStockClick} clicked={clicked} />
         </div>
       </div>
     </div>
