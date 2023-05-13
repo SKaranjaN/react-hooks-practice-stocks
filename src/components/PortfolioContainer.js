@@ -6,8 +6,10 @@ function PortfolioContainer({ onAdd, clicked }) {
     <div>
       <h2>My Portfolio</h2>
 
-      {clicked && <Stock {...clicked} onAdd={onAdd} />}
-
+      {clicked &&
+        clicked.map((stock) => (
+          <Stock key={stock.id} {...stock} onAdd={onAdd} />
+        ))}
       {
         //render your portfolio stocks here
       }

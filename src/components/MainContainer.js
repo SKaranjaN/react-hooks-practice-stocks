@@ -4,7 +4,7 @@ import PortfolioContainer from "./PortfolioContainer";
 import SearchBar from "./SearchBar";
 
 function MainContainer() {
-  const [clicked, setClicked] = useState(null);
+  const [clicked, setClicked] = useState([]);
   const [stk, setStk] = useState([]);
 
   function fetchData() {
@@ -20,7 +20,7 @@ function MainContainer() {
 
   function handleStockClick(id) {
     const clickedStock = stk.find((stock) => stock.id === id);
-    setClicked(clickedStock);
+    setClicked((prevClicked) => [...prevClicked, clickedStock]);
   }
   return (
     <div>
